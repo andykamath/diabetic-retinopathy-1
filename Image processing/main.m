@@ -1,7 +1,7 @@
 %% Extract optic disc and artifacts from one image
 tic
 % Read image
-retinaRGB = imread('E:/Dev/CAD/Diabetic Retinopathy/train/16_left.jpeg');
+retinaRGB = imread('20051019_38557_0100_PP.jpg');
 % Resize image
 retinaRGB = resizeretina(retinaRGB, 752, 500);
 % Get optic disc mask
@@ -12,9 +12,10 @@ artifactMinSize = 1100;
             closingThresholdValue, opticDiscDilationSize, artifactMinSize);
 toc
 
+
 %% Extract exudates from one image
 tic
-fileName = 'E:/Dev/CAD/Diabetic Retinopathy/train/16_right.jpeg';    
+fileName = '20051019_38557_0100_PP.jpg';    
 % Read image
 retinaRGB = imread(fileName);
 % Resize image
@@ -27,9 +28,10 @@ opticDiscDilation = 10;
 exudatesMask = getexudates(retinaRGB, opticDiscMask, artifactsMask, opticDiscDilation);
 toc
 
+%{
 %% Postprocess one image
 tic
-fileName = 'E:/Dev/CAD/Diabetic Retinopathy/train/16_left.jpeg';  % 225_left
+fileName = '/home/andy/DROOP/images/test/eyes/20051019_38557_0100_PP.jpg';  % 225_left
 % Read images
 retina = imread(fileName);
 exudates = imread(strrep(fileName, '.jpeg', '_exudates.png'));
@@ -40,11 +42,11 @@ toc
 
 %% Extract features from one image
 % Load red lesions, exudates and optic disc mask
-fileName = 'E:/Dev/CAD/Diabetic Retinopathy/train/225_left.jpeg';  % 225_left
+fileName = '~/DROOP/images/test/eyes/20051019_38557_0100_PP.jpg';  % 225_left
 exudates = imread(strrep(fileName, '.jpeg', '_exudates.png'));
 opticDisc = imread(strrep(fileName, '.jpeg', '_optic_disc_mask.png'));
 redLesions = imread(strrep(strrep(fileName, '.jpeg', '_redlesion.png'), ...
-                            'E:/Dev/CAD/Diabetic Retinopathy/train', ...
+                            '~/DROOP/images/test/eyes/', ...
                             'E:/Dropbox/Diabetic Retinopathy/red_lesions_all'));
 % Make the images logical
 opticDisc = im2bw(opticDisc, 0.1);
@@ -244,3 +246,4 @@ fclose(fid) ;
 
 toc
 % delete(gcp);  % Close threads pool
+%}
